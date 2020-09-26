@@ -1,3 +1,4 @@
+require 'pry'
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +128,125 @@ def game_hash
 end
 
 # Write code here
+
+# def num_points_scored(player_name)
+#   game_hash.each do |team, team_data|
+#     team_data[:players].each do |player|
+#       if player[:player_name] == player_name
+#       return player[:points]
+#       end
+#     end
+#   end
+# end
+
+
+
+# def shoe_size(player_name)
+#   game_hash.each do |team, team_data|
+#     team_data[:players].each do |player|
+#       if player[:player_name] == player_name
+#       return player[:shoe]
+#       end
+#     end
+#   end
+# end
+
+# def team_colors(team_name)
+#   game_hash.each do |team, team_data|
+#     if team_data[:team_name] == team_name
+#       return team_data[:colors]
+#     end
+#   end
+# end
+
+
+# def team_names
+#   game_hash.map do |team, team_data|
+#     team_data[:team_name]
+#   end
+# end
+
+# def player_numbers(team_name)
+#   output = []  
+#   game_hash.each do |team, team_info|
+#       if team_info[:team_name] == team_name
+#         team_info.each do |key, value|
+#           if key == :players
+#             value.each do |player|
+#               output << player[:number]
+#             end
+#           end
+#         end
+#       end
+#   end
+#   return output
+# end
+
+
+# def player_stats(player_name)
+#   game_hash.each do |team, team_data|
+#     team_data[:players].each do |player|
+#       if :players[:player_name] == player_name
+#         return team_data[:players]
+#       end
+#     end
+# end
+  
+# end
+
+
+def players_array
+  game_hash[:home][:players].push(game_hash[:away][:players]).flatten
+  
+end
+
+def players_hash
+  Hash.new = players_array.collect do |element| 
+    [element[:player_name], element]
+  end
+end
+
+def num_points_scored(name)
+  players_hash[name][:points]
+end
+
+
+def shoe_size(name)
+  players_hash[name][:shoe]
+end
+
+
+def team_colors(team)
+  if game_hash[:home].has_value? team
+    return game_hash[:home][:colors]
+  end
+  return game_hash[:away][:colors]
+end
+
+
+def team_names
+  team = game_hash.values.each_with_object([]) do |element, array|
+    array << element[:team_name]
+  end
+  team
+end
+
+
+def player_numbers(team)
+  if game_hash[:home].has_value? team 
+    return game_hash[:home][:players].map {|player| player[:number]}
+  end
+  return game_hash[:away][:players].map {|player| player[:number]}
+end
+
+
+def player_stats(name)
+  players_hash[name]
+end
+
+
+def big_shoe_rebounds
+  shoe_rebound = Hash[players_array.collect { |element| [element[:shoe], element[:rebounds]]}]
+  sorted = shoe_rebound.sort_by { |shoe, rebound| shoe}
+  sorted.last[1]
+end
