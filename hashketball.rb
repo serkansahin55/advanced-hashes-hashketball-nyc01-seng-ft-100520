@@ -201,7 +201,7 @@ def players_array
 end
 
 def players_hash
-  Hash.new = players_array.collect do |element| 
+  Hash.new =  players_array.collect do |element| 
     [element[:player_name], element]
   end
 end
